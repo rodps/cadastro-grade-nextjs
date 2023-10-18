@@ -8,7 +8,8 @@ interface Variacao {
 }
 
 interface VariacaoErrors {
-  [inputName: string]: string | undefined | null
+  nome: string | null | undefined
+  valor: string | null | undefined
 }
 
 export default function Home() {
@@ -22,7 +23,10 @@ export default function Home() {
 
   let gradeArray = Array<string[]>()
 
-  const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({})
+  const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({
+    nome: "",
+    valor: ""
+  })
 
   useEffect(() => {
     atualizarGrade()
@@ -30,19 +34,23 @@ export default function Home() {
 
   const addVariacao = (): void => {
     //validação
-    let error = null;
+    let errors: VariacaoErrors = {
+      nome: "",
+      valor: ""
+    }
     if (nomeVariacao.length == 0) {
-      error = "Este campo é obrigatório"
+      errors.nome = "Este campo é obrigatório!"
+    }
+    if (valoresArray.length == 0) {
+      errors.valor = "É necessário pelo menos 1 valor!"
     }
     variacoes.forEach(v => {
       if (v.nome === nomeVariacao) {
-        error = "Este nome já está sendo utilizado!"
+        errors.nome = "Este nome já está sendo utilizado!"
       }
     })
-    setVariacaoErrors({
-      nome: error
-    })
-    if (error) return
+    setVariacaoErrors(errors)
+    if (errors.nome || errors.valor) return
     //end validacao
 
     const variacao: Variacao = {
@@ -122,6 +130,9 @@ export default function Home() {
               value={valorVariacao} 
               onChange={(ev) => setValorVariacao(ev.target.value)} 
               />
+              {variacaoErrors["valor"] && 
+                <div className="invalid-feedback d-block">{variacaoErrors["valor"]}</div>
+              }
           </div>
           <button className='btn btn-warning' onClick={() => addValor()}>Adicionar valor</button>
         </div>
