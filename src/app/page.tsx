@@ -135,8 +135,8 @@ export default function Home() {
             value={nomeVariacao} 
             onChange={(ev) => setNomeVariacao(ev.target.value)} 
             />
-            {variacaoErrors["nome"] && 
-              <div className="invalid-feedback d-block">{variacaoErrors["nome"]}</div>
+            {variacaoErrors.nome && 
+              <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
             }
         </div>
         <div className='d-flex gap-3'>
@@ -150,8 +150,8 @@ export default function Home() {
               value={valorVariacao} 
               onChange={(ev) => setValorVariacao(ev.target.value)} 
               />
-              {variacaoErrors["valor"] && 
-                <div className="invalid-feedback d-block">{variacaoErrors["valor"]}</div>
+              {variacaoErrors.valor && 
+                <div className="invalid-feedback d-block">{variacaoErrors.valor}</div>
               }
           </div>
           <button className='btn btn-warning' onClick={() => addValor()}>Adicionar valor</button>
