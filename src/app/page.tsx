@@ -31,6 +31,10 @@ export default function Home() {
 
   useEffect(() => {
     atualizarGrade()
+    setVariacaoErrors({
+      nome: "",
+      valor: ""
+    })
   }, [variacoes])
 
   const addVariacao = (): void => {
@@ -66,6 +70,7 @@ export default function Home() {
   }
 
   const addValor = (): void => {
+    //validacao
     if (valorVariacao.length === 0) {
       setVariacaoErrors({...variacaoErrors, valor: "Não é permitido valor em branco!"})
       return
@@ -76,8 +81,9 @@ export default function Home() {
         setVariacaoErrors({...variacaoErrors, valor: "Este valor já foi adicionado!"})
         return
       }
-      
     }
+    //end validacao
+
     setValoresArray(valoresArray => [...valoresArray, valorVariacao])
     setValorVariacao("")
   }
