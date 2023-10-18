@@ -10,16 +10,16 @@ interface Variacao {
 export default function Home() {
 
   const [variacoes, setVariacoes] = useState<Variacao[]>([])
-
   const [nomeVariacao, setNomeVariacao] = useState<string>("")
   const [valorVariacao, setValorVariacao] = useState<string>("")
   const [valoresArray, setValoresArray] = useState<string[]>([])
+
+  const [gradeState, setGradeState] = useState<Array<string[]>>([])
 
   let gradeArray = Array<string[]>()
 
   useEffect(() => {
     atualizarGrade()
-    console.log(gradeArray)
   }, [variacoes])
 
   const addVariacao = (): void => {
@@ -39,6 +39,7 @@ export default function Home() {
 
   const atualizarGrade = () => {
     percorre(0, [])
+    setGradeState(gradeArray);
   }
 
   const percorre = (index: number, grade: string[]) => {
@@ -107,7 +108,11 @@ export default function Home() {
 
       <h3 className='my-3'>Grade</h3>
 
-      
+      <ul>
+        {gradeState.map((g, idx) => <li key={idx}>
+          {g.join(" ")}
+        </li>)}
+      </ul>
 
     </main>
   )
