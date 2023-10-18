@@ -18,7 +18,7 @@ export default function Home() {
   let gradeArray = Array<string[]>()
 
   useEffect(() => {
-    percorre(0, [])
+    atualizarGrade()
     console.log(gradeArray)
   }, [variacoes])
 
@@ -37,28 +37,9 @@ export default function Home() {
     setValorVariacao("")
   }
 
-  // const atualizarGrade = (): void => {
-  //   let j = 0;
-  //   let i = 0;
-  //   let grade = []
-  //   let isEnd = false
-  //   while (isEnd) {
-  //     const valores = variacoes[i].valores
-  //     grade.push(valores[j])
-  //     if (i < variacoes.length) {
-  //       percorre(i++)
-  //     }
-  //     else {
-  //       gradeArray.push(grade)
-  //       grade.pop()
-  //       if (j < valores.length) {
-  //         j++
-  //       } else {
-  //         j = 0
-  //       }
-  //     }
-  //   }
-  // }
+  const atualizarGrade = () => {
+    percorre(0, [])
+  }
 
   const percorre = (index: number, grade: string[]) => {
     if (variacoes.length == 0) return
@@ -73,8 +54,6 @@ export default function Home() {
       grade.pop()
     })
   }
-
-
 
   return (
     <main className='container'>
