@@ -35,23 +35,21 @@ export default function Home() {
 
   const addVariacao = (): void => {
     //validação
-    let errors: VariacaoErrors = {
-      nome: "",
-      valor: ""
-    }
     if (nomeVariacao.length == 0) {
-      errors.nome = "Este campo é obrigatório!"
+      setVariacaoErrors({...variacaoErrors, nome: "Este campo é obrigatório!"})
+      return
     }
     if (valoresArray.length == 0) {
-      errors.valor = "É necessário pelo menos 1 valor!"
+      setVariacaoErrors({...variacaoErrors, valor: "É necessário pelo menos 1 valor!" })
+      return
     }
-    variacoes.forEach(v => {
-      if (v.nome === nomeVariacao) {
-        errors.nome = "Este nome já está sendo utilizado!"
+    for (let i = 0; i < variacoes.length; i++) {
+      const nome = variacoes[i].nome;
+      if (nome === nomeVariacao) {
+        setVariacaoErrors({...variacaoErrors, nome: "Este nome já está sendo utilizado!" })
+        return
       }
-    })
-    setVariacaoErrors(errors)
-    if (errors.nome || errors.valor) return
+    }
     //end validacao
 
     const variacao: Variacao = {
@@ -68,6 +66,18 @@ export default function Home() {
   }
 
   const addValor = (): void => {
+    if (valorVariacao.length === 0) {
+      setVariacaoErrors({...variacaoErrors, valor: "Não é permitido valor em branco!"})
+      return
+    }
+    for (let i = 0; i < valoresArray.length; i++) {
+      const valor = valoresArray[i];
+      if (valor === valorVariacao) {
+        setVariacaoErrors({...variacaoErrors, valor: "Este valor já foi adicionado!"})
+        return
+      }
+      
+    }
     setValoresArray(valoresArray => [...valoresArray, valorVariacao])
     setValorVariacao("")
   }
