@@ -7,6 +7,10 @@ interface Variacao {
   valores: string[]
 }
 
+interface VariacaoErrors {
+  [inputName: string]: string | undefined | null
+}
+
 export default function Home() {
 
   const [variacoes, setVariacoes] = useState<Variacao[]>([])
@@ -18,11 +22,29 @@ export default function Home() {
 
   let gradeArray = Array<string[]>()
 
+  const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({})
+
   useEffect(() => {
     atualizarGrade()
   }, [variacoes])
 
   const addVariacao = (): void => {
+    //validação
+    let error = null;
+    if (nomeVariacao.length == 0) {
+      error = "Este campo é obrigatório"
+    }
+    variacoes.forEach(v => {
+      if (v.nome === nomeVariacao) {
+        error = "Este nome já está sendo utilizado!"
+      }
+    })
+    setVariacaoErrors({
+      nome: error
+    })
+    if (error) return
+    //end validacao
+
     const variacao: Variacao = {
       nome: nomeVariacao,
       valores: valoresArray
@@ -69,8 +91,8 @@ export default function Home() {
 
       <h3 className='my-3'>Variações</h3>
       <div>
-        <ul>
-          {variacoes.map((v, idx) => <li key={idx}>
+        <ul className='list-group'>
+          {variacoes.map((v, idx) => <li className='list-group-item' key={idx}>
             <p>{v.nome}</p>
             <ul className='list-unstyled d-flex gap-2'>{v.valores.map((valor, j) => <li className='list-style-none' key={j}><span className='badge bg-secondary'>{valor}</span></li> )}</ul>
             </li>)}
@@ -85,6 +107,9 @@ export default function Home() {
             value={nomeVariacao} 
             onChange={(ev) => setNomeVariacao(ev.target.value)} 
             />
+            {variacaoErrors["nome"] && 
+              <div className="invalid-feedback d-block">{variacaoErrors["nome"]}</div>
+            }
         </div>
         <div className='d-flex gap-3'>
           <div className='form-group mb-3'>
