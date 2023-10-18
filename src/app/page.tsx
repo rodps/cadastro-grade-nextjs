@@ -1,8 +1,9 @@
 "use client"
 
+import VariacoesList from '@/components/variacoes-list'
 import { useEffect, useState } from 'react'
 
-interface Variacao {
+export interface Variacao {
   nome: string,
   valores: string[]
 }
@@ -99,12 +100,7 @@ export default function Home() {
 
       <h3 className='my-3'>Variações</h3>
       <div>
-        <ul className='list-group'>
-          {variacoes.map((v, idx) => <li className='list-group-item' key={idx}>
-            <p>{v.nome}</p>
-            <ul className='list-unstyled d-flex gap-2'>{v.valores.map((valor, j) => <li className='list-style-none' key={j}><span className='badge bg-secondary'>{valor}</span></li> )}</ul>
-            </li>)}
-        </ul>
+        <VariacoesList variacoes={variacoes} />
         <div className='form-group mb-3'>
           <label htmlFor="variacao">Nome da variação</label>
           <input 
