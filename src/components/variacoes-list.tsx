@@ -1,10 +1,11 @@
 import { Variacao } from "@/app/page";
 
 interface VariacoesListProps {
-    variacoes: Variacao[]
+    variacoes: Variacao[],
+    onDelete: (nome: string) => void
 }
 
-export default function VariacoesList({ variacoes }: VariacoesListProps) {
+export default function VariacoesList({ variacoes, onDelete }: VariacoesListProps) {
     return (
         <ul className='list-group'>
           {variacoes.map((v, idx) => 
@@ -18,7 +19,7 @@ export default function VariacoesList({ variacoes }: VariacoesListProps) {
                             </li> 
                         )}</ul>
                     </div>
-                    <button className="btn btn-sm btn-danger">Excluir</button>
+                    <button className="btn btn-sm btn-danger" onClick={() => onDelete(v.nome)}>Excluir</button>
                 </div>
             </li>)}
         </ul>

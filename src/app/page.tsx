@@ -63,6 +63,10 @@ export default function Home() {
     setValoresArray([])
   }
 
+  const excluirVariacao = (nome: String): void => {
+    setVariacoes(variacoes.filter(v => v.nome !== nome))
+  }
+
   const addValor = (): void => {
     setValoresArray(valoresArray => [...valoresArray, valorVariacao])
     setValorVariacao("")
@@ -100,7 +104,7 @@ export default function Home() {
 
       <h3 className='my-3'>Variações</h3>
       <div>
-        <VariacoesList variacoes={variacoes} />
+        <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} />
         <div className='form-group mb-3'>
           <label htmlFor="variacao">Nome da variação</label>
           <input 
