@@ -72,6 +72,10 @@ export default function Home() {
     setValorVariacao("")
   }
 
+  const excluirValor = (valor: string): void => {
+    setValoresArray(valoresArray.filter(v => v !== valor))
+  }
+
   const atualizarGrade = () => {
     percorre(0, [])
     setGradeState(gradeArray);
@@ -137,7 +141,12 @@ export default function Home() {
           <button className='btn btn-warning' onClick={() => addValor()}>Adicionar valor</button>
         </div>
         <ul className='list-unstyled d-flex gap-2'>
-          {valoresArray.map((valor, idx) => <li className='list-style-none' key={idx}><span className='badge bg-secondary'>{valor}</span></li>)}
+          {valoresArray.map((valor, idx) => 
+            <li className='list-style-none' key={idx}>
+              <h5>
+                <span className='badge bg-secondary d-flex align-items-center gap-2'>{valor} <button type="button" className="btn-close" aria-label="Close" onClick={() => excluirValor(valor)}></button></span>
+              </h5>
+            </li>)}
         </ul>
         <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar variação</button>
       </div>
