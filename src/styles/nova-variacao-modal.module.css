@@ -1,5 +1,5 @@
 .background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -22,7 +22,7 @@
 .modalFooter {
     display: flex;
     gap: 1rem;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .modalTitle {
