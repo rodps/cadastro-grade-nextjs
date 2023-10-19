@@ -1,25 +1,36 @@
 import { Variacao, VariacaoErrors } from "@/app/page"
 import styles from "@/styles/nova-variacao-modal.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface NovaVariacaoModalProps {
     variacoes: Variacao[]
     onAdd: (variacao: Variacao) => void
+    onUpdate: (index: number, variacao: Variacao) => void
     show: boolean
     onClose: () => void
-    titulo: string
+    editarIndex: number | undefined
 }
 
-export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, titulo }: NovaVariacaoModalProps) {
+export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, editarIndex, onUpdate }: NovaVariacaoModalProps) {
 
     const [nomeVariacao, setNomeVariacao] = useState<string>("")
     const [valorVariacao, setValorVariacao] = useState<string>("")
     const [valoresArray, setValoresArray] = useState<string[]>([])
-
     const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({
         nome: "",
         valor: ""
-      })
+    })
+
+    useEffect(() => {
+        if (editarIndex != null && editarIndex != undefined) {
+            const variacao = variacoes[editarIndex]
+            setNomeVariacao(variacao.nome)
+            setValoresArray(variacao.valores)
+        } else {
+            setNomeVariacao("")
+            setValoresArray([])
+        }
+    }, [show, editarIndex])
 
     const addVariacao = (): void => {
         //validação
@@ -46,6 +57,28 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, tit
         }
         onAdd(variacao)
         fecharModal()
+    }
+
+    const editarVariacao = () => {
+        //validação
+        if (nomeVariacao.length == 0) {
+            setVariacaoErrors({...variacaoErrors, nome: "Este campo é obrigatório!"})
+            return
+          }
+          if (valoresArray.length == 0) {
+            setVariacaoErrors({...variacaoErrors, valor: "É necessário pelo menos 1 valor!" })
+            return
+          }
+          //end validacao
+      
+          const variacao: Variacao = {
+            nome: nomeVariacao,
+            valores: valoresArray
+          }
+          if (editarIndex != null && editarIndex != undefined) {
+              onUpdate(editarIndex, variacao)
+          }
+          fecharModal()
     }
 
     const fecharModal = () => {
@@ -86,7 +119,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, tit
         return (
             <div className={styles.background}>
                 <div className={styles.modal}>
-                    <h3 className={styles.modalTitle}>{titulo}</h3>
+                    <h3 className={styles.modalTitle}>{editarIndex ? "Editar Variação" : "Nova Variação"}</h3>
                     <div className={styles.modalBody}>
                         <div className='form-group mb-3'>
                             <label htmlFor="variacao">Nome da variação</label>
@@ -96,7 +129,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, tit
                                 id="variacao" 
                                 className='form-control' 
                                 value={nomeVariacao} 
-                                onChange={(ev) => setNomeVariacao(ev.target.value)} 
+                                onChange={(ev) => setNomeVariacao(ev.target.value)}
                                 />
                                 {variacaoErrors.nome && 
                                 <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
@@ -126,7 +159,11 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, tit
                             </li>)}
                         </ul>
                         <div className={styles.modalFooter}>
-                            <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar</button>
+                            {editarIndex != undefined ?
+                                <button className='btn btn-primary' onClick={() => editarVariacao()}>Editar</button>
+                                :
+                                <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar</button>                                
+                            }
                             <button className="btn btn-secondary" onClick={() => fecharModal()}>Fechar</button>
                         </div>
                     </div>

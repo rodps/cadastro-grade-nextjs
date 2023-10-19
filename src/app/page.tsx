@@ -19,6 +19,7 @@ export default function Home() {
   const [variacoes, setVariacoes] = useState<Variacao[]>([])
   const [gradeState, setGradeState] = useState<Array<string[]>>([])
   const [showNovaVariacaoModal, setShowNovaVariacaoModal] = useState(false);
+  const [editarVariacao, setEditarVariacao] = useState<number | undefined>()
 
   let gradeArray = Array<string[]>()
 
@@ -28,6 +29,12 @@ export default function Home() {
 
   const addVariacao = (variacao: Variacao): void => {
     setVariacoes(variacoes => [...variacoes, variacao])
+  }
+
+  const updateVariacao = (index: number, variacao: Variacao): void => {
+    const updatedVariacoes = [...variacoes]
+    updatedVariacoes[index] = variacao
+    setVariacoes(updatedVariacoes)
   }
 
   const excluirVariacao = (nome: String): void => {
@@ -53,6 +60,17 @@ export default function Home() {
     })
   }
 
+  const abrirModalEditarVariacao = (index: number) => {
+    const variacao = variacoes[index]
+    setEditarVariacao(index)
+    setShowNovaVariacaoModal(true)
+  }
+
+  const abrirModalNovaVariacao = () => {
+    setEditarVariacao(undefined)
+    setShowNovaVariacaoModal(true)
+  }
+
   return (
     <main className='container'>
       <div className='my-5'>
@@ -71,8 +89,8 @@ export default function Home() {
       <h4 className='mb-3'>Variações</h4>
       <div className='mb-3 row'>
         <div className='col-6'>
-          <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} />
-          <button className='btn btn-primary' onClick={() => setShowNovaVariacaoModal(true)}>Adicionar variação</button>
+          <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} onUpdate={abrirModalEditarVariacao} />
+          <button className='btn btn-primary' onClick={() => abrirModalNovaVariacao()}>Adicionar variação</button>
         </div>
       </div>
 
@@ -84,9 +102,10 @@ export default function Home() {
       </ul>
 
       <NovaVariacaoModal 
-            titulo={"Nova Variacão"}
             variacoes={variacoes} 
+            editarIndex={editarVariacao}
             onAdd={addVariacao} 
+            onUpdate={updateVariacao}
             onClose={() => setShowNovaVariacaoModal(false)} 
             show={showNovaVariacaoModal} />
 
