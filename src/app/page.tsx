@@ -55,34 +55,40 @@ export default function Home() {
 
   return (
     <main className='container'>
-      <h1 className='my-5'>Cadastro de produtos</h1>
+      <div className='my-5'>
+        <h1>Cadastro de produtos</h1>
+        <p>Preencha os campos abaixo para cadastrar um novo produto.</p>
+      </div>
 
-      <form action="">
-        <div className='form-group'>
+      <h4 className='mb-3'>Informações</h4>
+      <div className='row'>
+        <div className='form-group mb-3 col-6'>
           <label htmlFor="nome">Nome do produto</label>
           <input type="text" id='nome' className='form-control' />
         </div>
-      </form>
-
-      <h3 className='my-3'>Variações</h3>
-      <div>
-        <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} />
-        <button className='btn btn-primary my-4' onClick={() => setShowNovaVariacaoModal(true)}>Adicionar variação</button>
-        <NovaVariacaoModal 
-          titulo={"Nova Variacão"}
-          variacoes={variacoes} 
-          onAdd={addVariacao} 
-          onClose={() => setShowNovaVariacaoModal(false)} 
-          show={showNovaVariacaoModal} />
       </div>
 
-      <h3 className='my-3'>Grade</h3>
+      <h4 className='mb-3'>Variações</h4>
+      <div className='mb-3 row'>
+        <div className='col-6'>
+          <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} />
+          <button className='btn btn-primary' onClick={() => setShowNovaVariacaoModal(true)}>Adicionar variação</button>
+        </div>
+      </div>
 
+      <h4 className='my-5'>Grade</h4>
       <ul>
         {gradeState.map((g, idx) => <li key={idx}>
           {g.join(" ")}
         </li>)}
       </ul>
+
+      <NovaVariacaoModal 
+            titulo={"Nova Variacão"}
+            variacoes={variacoes} 
+            onAdd={addVariacao} 
+            onClose={() => setShowNovaVariacaoModal(false)} 
+            show={showNovaVariacaoModal} />
 
     </main>
   )

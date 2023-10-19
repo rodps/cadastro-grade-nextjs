@@ -7,7 +7,7 @@ interface VariacoesListProps {
 
 export default function VariacoesList({ variacoes, onDelete }: VariacoesListProps) {
     return (
-        <ul className='list-group'>
+        <ul className='list-group list-group-flush mb-3'>
           {variacoes.map((v, idx) => 
             <li className='list-group-item' key={idx}>
                 <div className="d-flex justify-content-between">
@@ -19,7 +19,9 @@ export default function VariacoesList({ variacoes, onDelete }: VariacoesListProp
                             </li> 
                         )}</ul>
                     </div>
-                    <button className="btn btn-sm btn-danger" onClick={() => onDelete(v.nome)}>Excluir</button>
+                    <div className="d-flex align-items-center">
+                        <button className="btn btn-danger" onClick={() => onDelete(v.nome)}>Excluir</button>
+                    </div>
                 </div>
             </li>)}
         </ul>
