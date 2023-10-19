@@ -79,13 +79,13 @@ export default function Home() {
       </div>
 
       <h4 className='mb-3'>Informações</h4>
-      <div className='row'>
+      <div className='row mb-3'>
         <div className='form-group mb-3 col-6'>
           <label htmlFor="nome">Nome do produto</label>
           <input type="text" id='nome' className='form-control' />
         </div>
       </div>
-
+      
       <h4 className='mb-3'>Variações</h4>
       <div className='mb-3 row'>
         <div className='col-6'>
@@ -95,11 +95,23 @@ export default function Home() {
       </div>
 
       <h4 className='my-5'>Grade</h4>
-      <ul>
-        {gradeState.map((g, idx) => <li key={idx}>
-          {g.join(" ")}
-        </li>)}
-      </ul>
+      <table className='table'>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Estoque</th>
+            <th>Preco</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gradeState.map((g, idx) => 
+          <tr key={idx} className='mb-3'>
+              <th className='col-6'>{g.join(" ")}</th>
+              <td className='col-3'><input type="number" className="form-control" id="estoque" placeholder="Estoque" /></td>
+              <td className='col-3'><input type="number" className="form-control" id="estoque" placeholder="Preco" /></td>
+          </tr>)}
+        </tbody>
+      </table>
 
       <NovaVariacaoModal 
             variacoes={variacoes} 
