@@ -130,6 +130,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
                                 className='form-control' 
                                 value={nomeVariacao} 
                                 onChange={(ev) => setNomeVariacao(ev.target.value)}
+                                placeholder="Ex.: Cor"
                                 />
                                 {variacaoErrors.nome && 
                                 <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
@@ -144,6 +145,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
                             className='form-control' 
                             value={valorVariacao} 
                             onChange={(ev) => setValorVariacao(ev.target.value)} 
+                            placeholder="Ex.: Preto"
                             />
                             {variacaoErrors.valor && 
                                 <div className="invalid-feedback d-block">{variacaoErrors.valor}</div>
