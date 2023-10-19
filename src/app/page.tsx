@@ -61,7 +61,6 @@ export default function Home() {
   }
 
   const abrirModalEditarVariacao = (index: number) => {
-    const variacao = variacoes[index]
     setEditarVariacao(index)
     setShowNovaVariacaoModal(true)
   }
