@@ -1,5 +1,6 @@
 "use client"
 
+import NovaVariacaoModal from '@/components/nova-variacao-modal'
 import VariacoesList from '@/components/variacoes-list'
 import { useEffect, useState } from 'react'
 
@@ -8,7 +9,7 @@ export interface Variacao {
   valores: string[]
 }
 
-interface VariacaoErrors {
+export interface VariacaoErrors {
   nome: string | null | undefined
   valor: string | null | undefined
 }
@@ -16,80 +17,21 @@ interface VariacaoErrors {
 export default function Home() {
 
   const [variacoes, setVariacoes] = useState<Variacao[]>([])
-  const [nomeVariacao, setNomeVariacao] = useState<string>("")
-  const [valorVariacao, setValorVariacao] = useState<string>("")
-  const [valoresArray, setValoresArray] = useState<string[]>([])
-
   const [gradeState, setGradeState] = useState<Array<string[]>>([])
+  const [showNovaVariacaoModal, setShowNovaVariacaoModal] = useState(false);
 
   let gradeArray = Array<string[]>()
 
-  const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({
-    nome: "",
-    valor: ""
-  })
-
   useEffect(() => {
     atualizarGrade()
-    setVariacaoErrors({
-      nome: "",
-      valor: ""
-    })
   }, [variacoes])
 
-  const addVariacao = (): void => {
-    //validação
-    if (nomeVariacao.length == 0) {
-      setVariacaoErrors({...variacaoErrors, nome: "Este campo é obrigatório!"})
-      return
-    }
-    if (valoresArray.length == 0) {
-      setVariacaoErrors({...variacaoErrors, valor: "É necessário pelo menos 1 valor!" })
-      return
-    }
-    for (let i = 0; i < variacoes.length; i++) {
-      const nome = variacoes[i].nome;
-      if (nome === nomeVariacao) {
-        setVariacaoErrors({...variacaoErrors, nome: "Este nome já está sendo utilizado!" })
-        return
-      }
-    }
-    //end validacao
-
-    const variacao: Variacao = {
-      nome: nomeVariacao,
-      valores: valoresArray
-    }
+  const addVariacao = (variacao: Variacao): void => {
     setVariacoes(variacoes => [...variacoes, variacao])
-    setNomeVariacao("")
-    setValoresArray([])
   }
 
   const excluirVariacao = (nome: String): void => {
     setVariacoes(variacoes.filter(v => v.nome !== nome))
-  }
-
-  const addValor = (): void => {
-    //validacao
-    if (valorVariacao.length === 0) {
-      setVariacaoErrors({...variacaoErrors, valor: "Não é permitido valor em branco!"})
-      return
-    }
-    for (let i = 0; i < valoresArray.length; i++) {
-      const valor = valoresArray[i];
-      if (valor === valorVariacao) {
-        setVariacaoErrors({...variacaoErrors, valor: "Este valor já foi adicionado!"})
-        return
-      }
-    }
-    //end validacao
-
-    setValoresArray(valoresArray => [...valoresArray, valorVariacao])
-    setValorVariacao("")
-  }
-
-  const excluirValor = (valor: string): void => {
-    setValoresArray(valoresArray.filter(v => v !== valor))
   }
 
   const atualizarGrade = () => {
@@ -125,46 +67,13 @@ export default function Home() {
       <h3 className='my-3'>Variações</h3>
       <div>
         <VariacoesList variacoes={variacoes} onDelete={excluirVariacao} />
-        <div className='form-group mb-3'>
-          <label htmlFor="variacao">Nome da variação</label>
-          <input 
-            type="text" 
-            name="variacao" 
-            id="variacao" 
-            className='form-control' 
-            value={nomeVariacao} 
-            onChange={(ev) => setNomeVariacao(ev.target.value)} 
-            />
-            {variacaoErrors.nome && 
-              <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
-            }
-        </div>
-        <div className='d-flex gap-3'>
-          <div className='form-group mb-3'>
-            <label htmlFor="variacao">Valores</label>
-            <input 
-              type="text" 
-              name="valor" 
-              id="valor" 
-              className='form-control' 
-              value={valorVariacao} 
-              onChange={(ev) => setValorVariacao(ev.target.value)} 
-              />
-              {variacaoErrors.valor && 
-                <div className="invalid-feedback d-block">{variacaoErrors.valor}</div>
-              }
-          </div>
-          <button className='btn btn-warning' onClick={() => addValor()}>Adicionar valor</button>
-        </div>
-        <ul className='list-unstyled d-flex gap-2'>
-          {valoresArray.map((valor, idx) => 
-            <li className='list-style-none' key={idx}>
-              <h5>
-                <span className='badge bg-secondary d-flex align-items-center gap-2'>{valor} <button type="button" className="btn-close" aria-label="Close" onClick={() => excluirValor(valor)}></button></span>
-              </h5>
-            </li>)}
-        </ul>
-        <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar variação</button>
+        <button className='btn btn-primary my-4' onClick={() => setShowNovaVariacaoModal(true)}>Adicionar variação</button>
+        <NovaVariacaoModal 
+          titulo={"Nova Variacão"}
+          variacoes={variacoes} 
+          onAdd={addVariacao} 
+          onClose={() => setShowNovaVariacaoModal(false)} 
+          show={showNovaVariacaoModal} />
       </div>
 
       <h3 className='my-3'>Grade</h3>
