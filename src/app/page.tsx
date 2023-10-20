@@ -51,8 +51,8 @@ export default function Home() {
     const valores = variacoes[index].valores
     valores.forEach(valor => {
       grade.push(valor)
-      if (index < variacoes.length -1) {
-        percorre(index+1, grade)
+      if (index < variacoes.length - 1) {
+        percorre(index + 1, grade)
       } else {
         gradeArray.push([...grade])
       }
@@ -84,7 +84,7 @@ export default function Home() {
           <input type="text" id='nome' className='form-control' />
         </div>
       </div>
-      
+
       <h4 className='mb-3'>Variações</h4>
       <div className='mb-3 row'>
         <div className='col-6'>
@@ -103,22 +103,22 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {gradeState.map((g, idx) => 
-          <tr key={idx} className='mb-3'>
+          {gradeState.map((g, idx) =>
+            <tr key={idx} className='mb-3'>
               <th className='col-6'>{g.join(" ")}</th>
               <td className='col-3'><input type="number" className="form-control" id="estoque" placeholder="Estoque" /></td>
               <td className='col-3'><input type="number" className="form-control" id="estoque" placeholder="Preco" /></td>
-          </tr>)}
+            </tr>)}
         </tbody>
       </table>
 
-      <NovaVariacaoModal 
-            variacoes={variacoes} 
-            editarIndex={editarVariacao}
-            onAdd={addVariacao} 
-            onUpdate={updateVariacao}
-            onClose={() => setShowNovaVariacaoModal(false)} 
-            show={showNovaVariacaoModal} />
+      <NovaVariacaoModal
+        variacoes={variacoes}
+        editarIndex={editarVariacao}
+        onAdd={addVariacao}
+        onUpdate={updateVariacao}
+        onClose={() => setShowNovaVariacaoModal(false)}
+        show={showNovaVariacaoModal} />
 
     </main>
   )
