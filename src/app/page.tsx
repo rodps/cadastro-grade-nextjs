@@ -4,19 +4,19 @@ import NovaVariacaoModal from '@/components/nova-variacao-modal'
 import VariacoesList from '@/components/variacoes-list'
 import { useEffect, useState } from 'react'
 
-export interface Variacao {
+export interface IVariacao {
   nome: string,
   valores: string[]
 }
 
-export interface VariacaoErrors {
+export interface IVariacaoErrors {
   nome: string | null | undefined
   valor: string | null | undefined
 }
 
 export default function Home() {
 
-  const [variacoes, setVariacoes] = useState<Variacao[]>([])
+  const [variacoes, setVariacoes] = useState<IVariacao[]>([])
   const [gradeState, setGradeState] = useState<Array<string[]>>([])
   const [showNovaVariacaoModal, setShowNovaVariacaoModal] = useState(false);
   const [editarVariacao, setEditarVariacao] = useState<number | undefined>()
@@ -27,11 +27,11 @@ export default function Home() {
     atualizarGrade()
   }, [variacoes])
 
-  const addVariacao = (variacao: Variacao): void => {
+  const addVariacao = (variacao: IVariacao): void => {
     setVariacoes(variacoes => [...variacoes, variacao])
   }
 
-  const updateVariacao = (index: number, variacao: Variacao): void => {
+  const updateVariacao = (index: number, variacao: IVariacao): void => {
     const updatedVariacoes = [...variacoes]
     updatedVariacoes[index] = variacao
     setVariacoes(updatedVariacoes)

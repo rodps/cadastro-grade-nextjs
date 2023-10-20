@@ -1,11 +1,11 @@
-import { Variacao, VariacaoErrors } from "@/app/page"
+import { IVariacao, IVariacaoErrors } from "@/app/page"
 import styles from "@/styles/nova-variacao-modal.module.css"
 import { useEffect, useState } from "react"
 
 interface NovaVariacaoModalProps {
-  variacoes: Variacao[]
-  onAdd: (variacao: Variacao) => void
-  onUpdate: (index: number, variacao: Variacao) => void
+  variacoes: IVariacao[]
+  onAdd: (variacao: IVariacao) => void
+  onUpdate: (index: number, variacao: IVariacao) => void
   show: boolean
   onClose: () => void
   editarIndex: number | undefined
@@ -16,7 +16,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
   const [nomeVariacao, setNomeVariacao] = useState<string>("")
   const [valorVariacao, setValorVariacao] = useState<string>("")
   const [valoresArray, setValoresArray] = useState<string[]>([])
-  const [variacaoErrors, setVariacaoErrors] = useState<VariacaoErrors>({
+  const [variacaoErrors, setVariacaoErrors] = useState<IVariacaoErrors>({
     nome: "",
     valor: ""
   })
@@ -51,7 +51,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
     }
     //end validacao
 
-    const variacao: Variacao = {
+    const variacao: IVariacao = {
       nome: nomeVariacao,
       valores: valoresArray
     }
@@ -71,7 +71,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
     }
     //end validacao
 
-    const variacao: Variacao = {
+    const variacao: IVariacao = {
       nome: nomeVariacao,
       valores: valoresArray
     }

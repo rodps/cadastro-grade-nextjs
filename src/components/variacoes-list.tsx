@@ -1,7 +1,7 @@
-import { Variacao } from "@/app/page";
+import { IVariacao } from "@/app/page";
 
 interface VariacoesListProps {
-  variacoes: Variacao[]
+  variacoes: IVariacao[]
   onDelete: (nome: string) => void
   onUpdate: (index: number) => void
 }
