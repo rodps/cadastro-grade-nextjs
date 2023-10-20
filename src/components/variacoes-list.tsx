@@ -1,4 +1,4 @@
-import { IVariacao } from "@/app/page";
+import { IVariacao } from "@/app/page"
 
 interface VariacoesListProps {
   variacoes: IVariacao[]

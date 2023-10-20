@@ -43,7 +43,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
       return
     }
     for (let i = 0; i < variacoes.length; i++) {
-      const nome = variacoes[i].nome;
+      const nome = variacoes[i].nome
       if (nome === nomeVariacao) {
         setVariacaoErrors({ ...variacaoErrors, nome: "Este nome já está sendo utilizado!" })
         return
@@ -98,7 +98,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
       return
     }
     for (let i = 0; i < valoresArray.length; i++) {
-      const valor = valoresArray[i];
+      const valor = valoresArray[i]
       if (valor === valorVariacao) {
         setVariacaoErrors({ ...variacaoErrors, valor: "Este valor já foi adicionado!" })
         return
