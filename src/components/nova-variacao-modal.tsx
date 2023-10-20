@@ -59,7 +59,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
     fecharModal()
   }
 
-  const editarVariacao = () => {
+  const editarVariacao = (): void => {
     //validação
     if (nomeVariacao.length == 0) {
       setVariacaoErrors({ ...variacaoErrors, nome: "Este campo é obrigatório!" })
@@ -81,7 +81,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
     fecharModal()
   }
 
-  const fecharModal = () => {
+  const fecharModal = (): void => {
     setNomeVariacao("")
     setValoresArray([])
     setVariacaoErrors({

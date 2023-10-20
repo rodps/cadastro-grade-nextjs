@@ -41,12 +41,12 @@ export default function Home() {
     setVariacoes(variacoes.filter(v => v.nome !== nome))
   }
 
-  const atualizarGrade = () => {
+  const atualizarGrade = (): void => {
     percorre(0, [])
     setGradeState(gradeArray);
   }
 
-  const percorre = (index: number, grade: string[]) => {
+  const percorre = (index: number, grade: string[]): void => {
     if (variacoes.length == 0) return
     const valores = variacoes[index].valores
     valores.forEach(valor => {
@@ -60,12 +60,12 @@ export default function Home() {
     })
   }
 
-  const abrirModalEditarVariacao = (index: number) => {
+  const abrirModalEditarVariacao = (index: number): void => {
     setEditarVariacao(index)
     setShowNovaVariacaoModal(true)
   }
 
-  const abrirModalNovaVariacao = () => {
+  const abrirModalNovaVariacao = (): void => {
     setEditarVariacao(undefined)
     setShowNovaVariacaoModal(true)
   }
