@@ -21,8 +21,6 @@ export default function Home() {
   const [showNovaVariacaoModal, setShowNovaVariacaoModal] = useState(false)
   const [editarVariacao, setEditarVariacao] = useState<number | undefined>()
 
-  let gradeArray = Array<string[]>()
-
   const addVariacao = (variacao: IVariacao): void => {
     const novasVariacoes = [...variacoes, variacao]
     atualizarGrade(novasVariacoes)
@@ -42,18 +40,19 @@ export default function Home() {
     setVariacoes(novasVariacoes)
   }
 
-  const atualizarGrade = (variacoesArr: IVariacao[]): void => {
-    percorre(0, [], variacoesArr)
+  const atualizarGrade = (variacoesArray: IVariacao[]): void => {
+    const gradeArray = Array<string[]>()
+    percorre(0, [], variacoesArray, gradeArray)
     setGradeState(gradeArray)
   }
 
-  const percorre = (index: number, grade: string[], variacoesArr: IVariacao[]): void => {
-    if (variacoesArr.length == 0) return
-    const valores = variacoesArr[index].valores
+  const percorre = (index: number, grade: string[], variacoesArray: IVariacao[], gradeArray: Array<string[]>): void => {
+    if (variacoesArray.length == 0) return
+    const valores = variacoesArray[index].valores
     valores.forEach(valor => {
       grade.push(valor)
-      if (index < variacoesArr.length - 1) {
-        percorre(index + 1, grade, variacoesArr)
+      if (index < variacoesArray.length - 1) {
+        percorre(index + 1, grade, variacoesArray, gradeArray)
       } else {
         gradeArray.push([...grade])
       }
