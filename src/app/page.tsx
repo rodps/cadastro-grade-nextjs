@@ -23,36 +23,37 @@ export default function Home() {
 
   let gradeArray = Array<string[]>()
 
-  useEffect(() => {
-    atualizarGrade()
-  }, [variacoes])
-
   const addVariacao = (variacao: IVariacao): void => {
-    setVariacoes(variacoes => [...variacoes, variacao])
+    const novasVariacoes = [...variacoes, variacao]
+    atualizarGrade(novasVariacoes)
+    setVariacoes(novasVariacoes)
   }
 
   const updateVariacao = (index: number, variacao: IVariacao): void => {
-    const updatedVariacoes = [...variacoes]
-    updatedVariacoes[index] = variacao
-    setVariacoes(updatedVariacoes)
+    const novasVariacoes = [...variacoes]
+    novasVariacoes[index] = variacao
+    atualizarGrade(novasVariacoes)
+    setVariacoes(novasVariacoes)
   }
 
   const excluirVariacao = (nome: String): void => {
-    setVariacoes(variacoes.filter(v => v.nome !== nome))
+    const novasVariacoes = variacoes.filter(v => v.nome !== nome)
+    atualizarGrade(novasVariacoes)
+    setVariacoes(novasVariacoes)
   }
 
-  const atualizarGrade = (): void => {
-    percorre(0, [])
+  const atualizarGrade = (variacoesArr: IVariacao[]): void => {
+    percorre(0, [], variacoesArr)
     setGradeState(gradeArray)
   }
 
-  const percorre = (index: number, grade: string[]): void => {
-    if (variacoes.length == 0) return
-    const valores = variacoes[index].valores
+  const percorre = (index: number, grade: string[], variacoesArr: IVariacao[]): void => {
+    if (variacoesArr.length == 0) return
+    const valores = variacoesArr[index].valores
     valores.forEach(valor => {
       grade.push(valor)
-      if (index < variacoes.length - 1) {
-        percorre(index + 1, grade)
+      if (index < variacoesArr.length - 1) {
+        percorre(index + 1, grade, variacoesArr)
       } else {
         gradeArray.push([...grade])
       }
