@@ -1,6 +1,6 @@
 import { IVariacao, IVariacaoErrors } from "@/app/page"
 import styles from "@/styles/nova-variacao-modal.module.css"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface NovaVariacaoModalProps {
   variacoes: IVariacao[]

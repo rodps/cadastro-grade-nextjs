@@ -2,7 +2,7 @@
 
 import NovaVariacaoModal from '@/components/nova-variacao-modal'
 import VariacoesList from '@/components/variacoes-list'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export interface IVariacao {
   nome: string,
@@ -120,7 +120,7 @@ export default function Home() {
           onAdd={addVariacao}
           onUpdate={updateVariacao}
           onClose={() => setShowNovaVariacaoModal(false)}
-          />
+        />
       }
 
     </main>
