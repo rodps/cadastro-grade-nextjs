@@ -24,26 +24,24 @@ export default function Home() {
   const addVariacao = (variacao: IVariacao): void => {
     const novasVariacoes = [...variacoes, variacao]
     atualizarGrade(novasVariacoes)
-    setVariacoes(novasVariacoes)
   }
 
   const updateVariacao = (index: number, variacao: IVariacao): void => {
     const novasVariacoes = [...variacoes]
     novasVariacoes[index] = variacao
     atualizarGrade(novasVariacoes)
-    setVariacoes(novasVariacoes)
   }
 
   const excluirVariacao = (nome: String): void => {
     const novasVariacoes = variacoes.filter(v => v.nome !== nome)
     atualizarGrade(novasVariacoes)
-    setVariacoes(novasVariacoes)
   }
 
   const atualizarGrade = (variacoesArray: IVariacao[]): void => {
     const gradeArray = Array<string[]>()
     percorre(0, [], variacoesArray, gradeArray)
     setGradeState(gradeArray)
+    setVariacoes(variacoesArray)
   }
 
   const percorre = (index: number, grade: string[], variacoesArray: IVariacao[], gradeArray: Array<string[]>): void => {
