@@ -12,8 +12,6 @@ interface NovaVariacaoModalProps {
 
 export default function NovaVariacaoModal({ variacoes, onAdd, onClose, editarIndex, onUpdate }: NovaVariacaoModalProps) {
 
-  console.log(editarIndex != undefined ? variacoes[editarIndex].nome : "")
-
   const [nomeVariacao, setNomeVariacao] = useState<string>(editarIndex != undefined ? variacoes[editarIndex].nome : "")
   const [valorVariacao, setValorVariacao] = useState<string>("")
   const [valoresArray, setValoresArray] = useState<string[]>(editarIndex != undefined ? variacoes[editarIndex].valores : [])
