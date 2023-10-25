@@ -113,13 +113,15 @@ export default function Home() {
         </tbody>
       </table>
 
-      <NovaVariacaoModal
-        variacoes={variacoes}
-        editarIndex={editarVariacao}
-        onAdd={addVariacao}
-        onUpdate={updateVariacao}
-        onClose={() => setShowNovaVariacaoModal(false)}
-        show={showNovaVariacaoModal} />
+      {showNovaVariacaoModal &&
+        <NovaVariacaoModal
+          variacoes={variacoes}
+          editarIndex={editarVariacao}
+          onAdd={addVariacao}
+          onUpdate={updateVariacao}
+          onClose={() => setShowNovaVariacaoModal(false)}
+          />
+      }
 
     </main>
   )

@@ -6,31 +6,21 @@ interface NovaVariacaoModalProps {
   variacoes: IVariacao[]
   onAdd: (variacao: IVariacao) => void
   onUpdate: (index: number, variacao: IVariacao) => void
-  show: boolean
   onClose: () => void
   editarIndex: number | undefined
 }
 
-export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, editarIndex, onUpdate }: NovaVariacaoModalProps) {
+export default function NovaVariacaoModal({ variacoes, onAdd, onClose, editarIndex, onUpdate }: NovaVariacaoModalProps) {
 
-  const [nomeVariacao, setNomeVariacao] = useState<string>("")
+  console.log(editarIndex != undefined ? variacoes[editarIndex].nome : "")
+
+  const [nomeVariacao, setNomeVariacao] = useState<string>(editarIndex != undefined ? variacoes[editarIndex].nome : "")
   const [valorVariacao, setValorVariacao] = useState<string>("")
-  const [valoresArray, setValoresArray] = useState<string[]>([])
+  const [valoresArray, setValoresArray] = useState<string[]>(editarIndex != undefined ? variacoes[editarIndex].valores : [])
   const [variacaoErrors, setVariacaoErrors] = useState<IVariacaoErrors>({
     nome: "",
     valor: ""
   })
-
-  useEffect(() => {
-    if (editarIndex != null && editarIndex != undefined) {
-      const variacao = variacoes[editarIndex]
-      setNomeVariacao(variacao.nome)
-      setValoresArray(variacao.valores)
-    } else {
-      setNomeVariacao("")
-      setValoresArray([])
-    }
-  }, [show, editarIndex])
 
   const addVariacao = (): void => {
     //validação
@@ -114,62 +104,60 @@ export default function NovaVariacaoModal({ variacoes, onAdd, show, onClose, edi
     setValoresArray(valoresArray.filter(v => v !== valor))
   }
 
-  if (show) {
-    return (
-      <div className={styles.background}>
-        <div className={styles.modal}>
-          <h3 className={styles.modalTitle}>{editarIndex ? "Editar Variação" : "Nova Variação"}</h3>
-          <div className={styles.modalBody}>
-            <div className='form-group mb-3'>
-              <label htmlFor="variacao">Nome da variação</label>
-              <input
-                type="text"
-                name="variacao"
-                id="variacao"
-                className='form-control'
-                value={nomeVariacao}
-                onChange={(ev) => setNomeVariacao(ev.target.value)}
-                placeholder="Ex.: Cor"
-              />
-              {variacaoErrors.nome &&
-                <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
-              }
-            </div>
-            <div className='form-group mb-3'>
-              <label htmlFor="variacao">Valores</label>
-              <input
-                type="text"
-                name="valor"
-                id="valor"
-                className='form-control'
-                value={valorVariacao}
-                onChange={(ev) => setValorVariacao(ev.target.value)}
-                placeholder="Ex.: Preto"
-              />
-              {variacaoErrors.valor &&
-                <div className="invalid-feedback d-block">{variacaoErrors.valor}</div>
-              }
-            </div>
-            <button className='btn btn-warning mb-3' onClick={() => addValor()}>Adicionar valor</button>
-            <ul className='list-unstyled d-flex gap-2'>
-              {valoresArray.map((valor, idx) =>
-                <li className='list-style-none' key={idx}>
-                  <h5>
-                    <span className='badge bg-secondary d-flex align-items-center gap-2'>{valor} <button type="button" className="btn-close" aria-label="Close" onClick={() => excluirValor(valor)}></button></span>
-                  </h5>
-                </li>)}
-            </ul>
-            <div className={styles.modalFooter}>
-              {editarIndex != undefined ?
-                <button className='btn btn-primary' onClick={() => editarVariacao()}>Editar</button>
-                :
-                <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar</button>
-              }
-              <button className="btn btn-secondary" onClick={() => fecharModal()}>Fechar</button>
-            </div>
+  return (
+    <div className={styles.background}>
+      <div className={styles.modal}>
+        <h3 className={styles.modalTitle}>{editarIndex ? "Editar Variação" : "Nova Variação"}</h3>
+        <div className={styles.modalBody}>
+          <div className='form-group mb-3'>
+            <label htmlFor="variacao">Nome da variação</label>
+            <input
+              type="text"
+              name="variacao"
+              id="variacao"
+              className='form-control'
+              value={nomeVariacao}
+              onChange={(ev) => setNomeVariacao(ev.target.value)}
+              placeholder="Ex.: Cor"
+            />
+            {variacaoErrors.nome &&
+              <div className="invalid-feedback d-block">{variacaoErrors.nome}</div>
+            }
+          </div>
+          <div className='form-group mb-3'>
+            <label htmlFor="variacao">Valores</label>
+            <input
+              type="text"
+              name="valor"
+              id="valor"
+              className='form-control'
+              value={valorVariacao}
+              onChange={(ev) => setValorVariacao(ev.target.value)}
+              placeholder="Ex.: Preto"
+            />
+            {variacaoErrors.valor &&
+              <div className="invalid-feedback d-block">{variacaoErrors.valor}</div>
+            }
+          </div>
+          <button className='btn btn-warning mb-3' onClick={() => addValor()}>Adicionar valor</button>
+          <ul className='list-unstyled d-flex gap-2'>
+            {valoresArray.map((valor, idx) =>
+              <li className='list-style-none' key={idx}>
+                <h5>
+                  <span className='badge bg-secondary d-flex align-items-center gap-2'>{valor} <button type="button" className="btn-close" aria-label="Close" onClick={() => excluirValor(valor)}></button></span>
+                </h5>
+              </li>)}
+          </ul>
+          <div className={styles.modalFooter}>
+            {editarIndex != undefined ?
+              <button className='btn btn-primary' onClick={() => editarVariacao()}>Editar</button>
+              :
+              <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar</button>
+            }
+            <button className="btn btn-secondary" onClick={() => fecharModal()}>Fechar</button>
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
