@@ -1,4 +1,4 @@
-import { IVariacao, IVariacaoErrors } from "@/app/page"
+import { IVariacao, IVariacaoErrors } from "@/app/(produtos)/produto-form"
 import styles from "@/styles/nova-variacao-modal.module.css"
 import { useState } from "react"
 
