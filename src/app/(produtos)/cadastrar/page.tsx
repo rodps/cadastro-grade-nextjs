@@ -1,3 +1,5 @@
+"use client"
+
 import { apiUrl } from '@/config'
 import { redirect } from 'next/navigation'
 import ProdutoForm, { IProduto } from '../produto-form'
