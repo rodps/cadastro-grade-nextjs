@@ -123,7 +123,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, onClose, editarInd
             }
           </div>
           <div className='form-group mb-3'>
-            <label htmlFor="variacao">Valores</label>
+            <label htmlFor="variacao">Valor</label>
             <input
               type="text"
               name="valor"
@@ -150,7 +150,7 @@ export default function NovaVariacaoModal({ variacoes, onAdd, onClose, editarInd
             {editarIndex != undefined ?
               <button className='btn btn-primary' onClick={() => editarVariacao()}>Editar</button>
               :
-              <button className='btn btn-primary' onClick={() => addVariacao()}>Adicionar</button>
+              <button className='btn btn-primary' onClick={() => addVariacao()}>Salvar</button>
             }
             <button className="btn btn-secondary" onClick={() => fecharModal()}>Fechar</button>
           </div>
